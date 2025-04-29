@@ -1,5 +1,4 @@
 <script lang="ts">
-    export const prerender = true;
     import Championship from '$lib/Championship.svelte';
     import Load from '$lib/Load.svelte';
 

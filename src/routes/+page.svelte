@@ -1,4 +1,5 @@
 <script lang="ts">
+    export const prerender = true;
     import Championship from '$lib/Championship.svelte';
     import Load from '$lib/Load.svelte';
 
@@ -14,7 +15,7 @@
     {/each}
 {:else }
     <h1>Upload a JSON file</h1>
-{/if} -->
+{/if}
 
 <style>
     :global(body) {

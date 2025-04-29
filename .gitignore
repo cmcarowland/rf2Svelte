@@ -25,7 +25,6 @@ vite.config.ts.timestamp-*
 # Svelte
 dist
 test-results/
-package-lock.json
 yarn.lock
 vite.config.js.timestamp-*
 /packages/create-svelte/template/CHANGELOG.md

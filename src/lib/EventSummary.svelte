@@ -19,7 +19,7 @@
 		<p class="winner">{eventData.winner}</p>
 	</div>
 
-	<button type="button" on:click={handleViewResults}>View Results</button>
+	<button type="button" onclick={handleViewResults}>View Results</button>
 </article>
 
 <style>

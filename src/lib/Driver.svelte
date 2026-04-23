@@ -1,4 +1,5 @@
 <tr class:player={jsonData.isPlayer == true}>
+    <td class="td" class:center={true}>{position}</td>
     <td class="td" class:center={true}>{jsonData.number}</td>
     <td>{jsonData.playerName}</td>
     <td>{jsonData.starts}</td>
@@ -12,7 +13,12 @@
 </tr>
 
 <script lang="ts">
-    let {jsonData} : {jsonData : any} = $props()
+    type Props = {
+        jsonData: unknown;
+        position: number;
+    };
+
+    let { jsonData, position }: Props = $props();
 </script>
 
 <style>

@@ -3,6 +3,10 @@
 
 	let { eventData, onClose }: { eventData: EventResult; onClose: () => void } = $props();
 
+	function formatResult(result: string) {
+		return result.split('#')[1]?.trim() ?? result;
+	}
+
 	function handleKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
 			onClose();
@@ -10,16 +14,16 @@
 	}
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window onkeydown={handleKeydown} />
 
-<div class="backdrop" role="presentation" on:click={onClose}>
-	<section class="dialog" role="dialog" aria-modal="true" aria-labelledby="event-title" on:click|stopPropagation>
+<div class="backdrop" role="presentation" onclick={(event) => event.target === event.currentTarget && onClose()}>
+	<div class="dialog" role="dialog" aria-modal="true" aria-labelledby="event-title" tabindex="-1">
 		<header>
 			<div>
 				<p class="label">Completed Race</p>
 				<h2 id="event-title">{eventData.trackName}</h2>
 			</div>
-			<button type="button" class="close" on:click={onClose}>Back to Championship</button>
+			<button type="button" class="close" onclick={onClose}>Back to Championship</button>
 		</header>
 
 		<div class="meta">
@@ -29,11 +33,14 @@
 		</div>
 
 		<ol>
-			{#each eventData.results as result}
-				<li>{result}</li>
+			{#each eventData.results as result, index}
+				<li>
+					<span class="entry-position">{index + 1}</span>
+					<span class="entry-name">{formatResult(result)}</span>
+				</li>
 			{/each}
 		</ol>
-	</section>
+	</div>
 </div>
 
 <style>
@@ -108,18 +115,58 @@
 
 	ol {
 		margin: 0;
-		padding-left: 1.25rem;
+		padding: 0;
+		list-style: none;
 		display: grid;
 		gap: 0.4rem;
 	}
 
 	li {
-		padding: 0.35rem 0;
+		display: grid;
+		grid-template-columns: 52px minmax(0, 1fr);
+		gap: 0.75rem;
+		align-items: center;
+		padding: 0.85rem 0.95rem;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 0.95rem;
+		background: rgba(255, 255, 255, 0.045);
+		color: rgba(255, 255, 255, 0.94);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+	}
+
+	.entry-position {
+		display: inline-grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: 999px;
+		background: rgba(243, 231, 179, 0.16);
+		border: 1px solid rgba(243, 231, 179, 0.35);
+		color: #f3e7b3;
+		font-weight: 800;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.entry-name {
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-weight: 600;
 	}
 
 	@media (max-width: 700px) {
 		header {
 			flex-direction: column;
+		}
+
+		li {
+			grid-template-columns: 42px minmax(0, 1fr);
+		}
+
+		.entry-position {
+			width: 2rem;
+			height: 2rem;
 		}
 	}
 </style>

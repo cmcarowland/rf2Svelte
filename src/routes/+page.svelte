@@ -19,7 +19,7 @@
 <h1>Welcome to LeMan Ultimate Championship View</h1>
 <Load bind:jsonData />
 {#if jsonData != null}
-    {#each jsonData as series}
+    {#each jsonData as series, index (series.vehicleType + '-' + index)}
         <Championship jsonData={series} onViewEvent={handleViewEvent} />
     {/each}
 {:else}

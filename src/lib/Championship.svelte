@@ -10,6 +10,7 @@
         <table>
             <thead>
                 <tr>
+                    <td>Position</td>
                     <td>Number</td>
                     <td>Name</td>
                     <td>Starts</td>
@@ -23,8 +24,8 @@
                 </tr>
             </thead>
             <tbody>
-                {#each jsonData['drivers'] as d}
-                    <Driver jsonData={d} />
+                {#each jsonData['drivers'] as d, i}
+                    <Driver jsonData={d} position={i+1} />
                 {/each}
             </tbody>
         </table>
